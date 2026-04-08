@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'ai_chatbot_service.dart';
 
 class CalorieCalculator extends GetxController {

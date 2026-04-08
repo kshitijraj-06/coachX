@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'ai_chatbot_service.dart';
 import 'chat_storage_service.dart';
 
@@ -24,13 +24,25 @@ class RecommendationService extends GetxController {
       String contextPrompt = _buildContextPrompt(chatHistory);
       
       final response = await _chatbotService.chatBotService(contextPrompt);
-      recommendation.value = response;
+      recommendation.value = _processRecommendationText(response);
       
     } catch (e) {
       recommendation.value = 'Focus on consistency today. A simple 30-minute workout will keep you on track!';
     }
     
     isLoading.value = false;
+  }
+
+  String _processRecommendationText(String text) {
+    return text
+        .replaceAll('&#39;', "'")
+        .replaceAll('&quot;', '"')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('**', '')
+        .replaceAll('*', 'â€¢')
+        .trim();
   }
 
   String _buildContextPrompt(List<Map<String, dynamic>> chatHistory) {

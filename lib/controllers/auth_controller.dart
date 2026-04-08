@@ -1,16 +1,29 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:gym_paglu/controllers/chat_storage_service.dart';
-import 'package:gym_paglu/core/envVars.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../core/envVars.dart';
+import 'ai_workout_recommendation_service.dart';
+import 'chat_storage_service.dart';
+import 'user_profile_service.dart';
 
 class AuthController extends GetxController {
   var isLoading = false.obs;
   var isLoggedIn = false.obs;
   final storage = FlutterSecureStorage();
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    final token = await storage.read(key: 'token');
+    isLoggedIn.value = token != null;
+  }
 
   Future<void> login(String email, String password) async {
     isLoading.value = true;
@@ -26,18 +39,27 @@ class AuthController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print('Login successful');
         final idToken = jsonDecode(response.body)['token'];
-        print(idToken);
         isLoggedIn.value = true;
-        Get.offAllNamed('/home');
         await storage.write(key: 'token', value: idToken);
+        
+        Get.offAllNamed('/home');
+        
+        // Generate AI workouts in background
+        try {
+          final userProfile = Get.put(UserProfileService());
+          await userProfile.fetchUserProfile();
+          final aiService = Get.put(AIWorkoutRecommendationService());
+          await aiService.generateWorkoutsForUser(userProfile.fitnessGoal.value);
+        } catch (e) {
+          print('Error generating workouts: $e');
+        }
       } else {
-        print('Login failed: \${response.statusCode}');
+        print('Login failed: ${response.statusCode}');
         isLoggedIn.value = false;
       }
     } catch (e) {
-      print('Error during login: \$e');
+      print('Error during login: $e');
       isLoggedIn.value = false;
     } finally {
       isLoading.value = false;
@@ -60,16 +82,21 @@ class AuthController extends GetxController {
       );
       if (response.statusCode == 200) {
         print('Signup successful');
-        final idToken = jsonDecode(response.body)['idToken'];
+        final idToken = jsonDecode(response.body)['token'];
         isLoggedIn.value = true;
-        Get.offAllNamed('/home');
         await storage.write(key: 'token', value: idToken);
+        
+        // Generate AI workouts for new user after signup
+        final aiService = Get.put(AIWorkoutRecommendationService());
+        await aiService.generateWorkoutsForUser(goal);
+        
+        Get.offAllNamed('/home');
       } else {
-        print('Signup failed: \${response.statusCode}');
+        print('Signup failed: ${response.statusCode}');
         isLoggedIn.value = false;
       }
     }catch (e) {
-      print('Error during signup: \$e');
+      print('Error during signup: $e');
       isLoggedIn.value = false;
     } finally {
       isLoading.value = false;
@@ -88,5 +115,25 @@ class AuthController extends GetxController {
 
     isLoggedIn.value = false;
     Get.offAllNamed('/login');
+  }
+  
+  Future<void> google_login(String token) async{
+    isLoading.value = true;
+    final token = await storage.read(key: 'Googletoken');
+    
+    try{
+      final response = await http.post(
+        Uri.parse('${ApiConfig.serviceApi}/api/auth/firebase-login'),
+        body: {
+          "token" : token
+        }
+      );
+
+      if(response.statusCode == 200){
+        print("Hogya");
+      }
+    }catch(e){
+      print("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR : $e");
+    }
   }
 }

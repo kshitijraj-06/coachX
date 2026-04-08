@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import '../../controllers/workoutsService.dart';
@@ -31,7 +31,7 @@ class AddWorkoutPage extends StatelessWidget {
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Get.back(),
+            onPressed: () => Navigator.pop(context),
           ),
           title: Text(
             'Add Workout',
@@ -109,7 +109,7 @@ class AddWorkoutPage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '${workout.caloriesPerMinute.toInt()} cal/min • ${workout.type}',
+                            '${workout.caloriesPerMinute.toInt()} cal/min â€¢ ${workout.type}',
                             style: GoogleFonts.inter(
                               fontSize: 14,
                               color: Colors.grey[300],

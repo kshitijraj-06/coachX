@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import '../../controllers/user_workout_service.dart';
@@ -20,6 +20,14 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userWorkoutService.fetchUserWorkouts();
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     userWorkoutService.fetchUserWorkouts();
   }
 
@@ -183,7 +191,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  '${workout.caloriesPerMinute.toInt()} cal/min • ${workout.type}',
+                                  '${workout.caloriesPerMinute.toInt()} cal/min â€¢ ${workout.type}',
                                   style: GoogleFonts.inter(
                                     fontSize: 14,
                                     color: Colors.grey[400],
@@ -274,7 +282,7 @@ class _WorkoutsPageState extends State<WorkoutsPage> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${workout['exercises']} exercises • ${workout['duration']}',
+                  '${workout['exercises']} exercises â€¢ ${workout['duration']}',
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     color: Colors.grey[400],

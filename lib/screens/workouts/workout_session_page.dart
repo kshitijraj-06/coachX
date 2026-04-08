@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/workout.dart';
@@ -45,7 +45,7 @@ class _WorkoutSessionPageState extends State<WorkoutSessionPage> {
     
     workoutTracker.addWorkoutSession(calories, minutes);
     
-    Get.back();
+    Navigator.pop(context);
     Get.snackbar(
       'Workout Complete!',
       'Great job! You burned $calories calories in $minutes minutes',
@@ -78,7 +78,7 @@ class _WorkoutSessionPageState extends State<WorkoutSessionPage> {
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Get.back(),
+            onPressed: () => Navigator.pop(context),
           ),
           title: Text(
             widget.workout.name,

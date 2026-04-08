@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'calorie_calculator.dart';
 import 'chat_storage_service.dart';
 

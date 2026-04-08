@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +8,8 @@ class ChatbotService extends GetxController{
 
 
   Future<String> chatBotService(String prompt)async{
-    const apiKey = 'AIzaSyDuYQPbD0Nx4jIsEra91KOvEhnYeFt5wW8';
-    final url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent');
+    const apiKey = 'AIzaSyCsuZ-fqkoFsC_jaYz8p1bWETDl_zVhvCg';
+    final url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent');
 
     const systemPrompt = "You are Julie, an AI fitness trainer and personal coach. You are friendly, motivational, and knowledgeable about fitness, nutrition, and wellness. Keep responses concise but helpful. Always encourage users and provide practical fitness advice. Focus on workout routines, exercise form, nutrition tips, and motivation. Be supportive and enthusiastic about their fitness journey and try to make the replies short.";
 

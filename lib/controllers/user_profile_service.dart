@@ -1,11 +1,12 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:gym_paglu/core/envVars.dart';
+import '../core/envVars.dart';
 import 'chat_storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'ai_workout_recommendation_service.dart';
+import 'user_workout_service.dart';
 
 class UserProfileService extends GetxController {
   var fitnessGoal = 'General Fitness'.obs;
@@ -47,14 +48,7 @@ class UserProfileService extends GetxController {
         height.value = data['height']?.toString() ?? '175';
         weight.value = data['weight']?.toString() ?? '70';
         fitnessGoal.value = data['fitnessGoal'] ?? 'General Fitness';
-        print(name.value);
-        print(data);
-       // fitnessGoal.value = data;
         isLoading.value = false;
-        
-        // Generate AI workouts for new user
-        final aiService = Get.put(AIWorkoutRecommendationService());
-        await aiService.generateWorkoutsForUser(fitnessGoal.value);
       }else{
         print("error: ${response.statusCode}");
         isLoading.value = false;
@@ -88,11 +82,14 @@ class UserProfileService extends GetxController {
 
       if (response.statusCode == 200) {
         fitnessGoal.value = goal;
-        print('done');
         await ChatStorageService.saveChat('user_profile', [{'fitnessGoal': goal}]);
         
-        // Generate AI workouts for new fitness goal
+        // Clear existing workouts and generate new ones
+        final userWorkoutService = Get.find<UserWorkoutService>();
+        await userWorkoutService.clearAllWorkouts();
+        
         final aiService = Get.put(AIWorkoutRecommendationService());
+        await storage.delete(key: 'ai_workouts_goal'); // Reset AI generation flag
         await aiService.generateWorkoutsForUser(goal);
       }
     } catch (e) {

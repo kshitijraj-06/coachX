@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/ai_chatbot_service.dart';
@@ -48,9 +48,6 @@ class AITrainerPage extends StatelessWidget {
                       height: 120,
                       width: 120,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF6C63FF), Color(0xFF9C88FF)],
-                        ),
                         borderRadius: BorderRadius.circular(60),
                         boxShadow: [
                           BoxShadow(
@@ -60,10 +57,12 @@ class AITrainerPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const Icon(
-                        Icons.psychology,
-                        size: 60,
-                        color: Colors.white,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Image.asset(
+                          'assets/images/SexyJulie.png',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 40),

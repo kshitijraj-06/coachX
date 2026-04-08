@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../dashboard/dashboard_page.dart';
 import '../workouts/workouts_page.dart';
 import '../ai_trainer/ai_trainer_page.dart';
@@ -18,11 +19,19 @@ class _HomeScreenState extends State<HomeScreen> {
   static  final List<Widget> _pages = <Widget>[
     DashboardPage(),
     WorkoutsPage(),
+    Container(),
     AITrainerPage(),
     ProfilePage(),
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
+    if (index == 2) {
+      final url = Uri.parse('https://pose-detection-tu3i.vercel.app');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
+      return;
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -74,8 +83,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             NavigationDestination(
               icon: Icon(
-                Icons.psychology_outlined,
+                Icons.accessibility_new_outlined,
                 color: _selectedIndex == 2 ? const Color(0xFF6C63FF) : Colors.grey[400],
+              ),
+              selectedIcon: const Icon(
+                Icons.accessibility_new,
+                color: Color(0xFF6C63FF),
+              ),
+              label: 'Pose',
+            ),
+            NavigationDestination(
+              icon: Icon(
+                Icons.psychology_outlined,
+                color: _selectedIndex == 3 ? const Color(0xFF6C63FF) : Colors.grey[400],
               ),
               selectedIcon: const Icon(
                 Icons.psychology,
@@ -86,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
             NavigationDestination(
               icon: Icon(
                 Icons.person_outline,
-                color: _selectedIndex == 3 ? const Color(0xFF6C63FF) : Colors.grey[400],
+                color: _selectedIndex == 4 ? const Color(0xFF6C63FF) : Colors.grey[400],
               ),
               selectedIcon: const Icon(
                 Icons.person,

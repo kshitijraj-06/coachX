@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gym_paglu/controllers/user_profile_service.dart';
 import '../../controllers/auth_controller.dart';
+import '../../controllers/user_profile_service.dart';
 import 'personal_info_page.dart';
 import 'fitness_goals_page.dart';
 import 'notifications_page.dart';

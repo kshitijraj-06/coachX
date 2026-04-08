@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/ai_chatbot_service.dart';
@@ -69,19 +69,22 @@ class _ChatPageState extends State<ChatPage> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () => Get.back(),
+                      onPressed: () => Navigator.pop(context),
                       icon: const Icon(Icons.arrow_back, color: Colors.white),
                     ),
                     Container(
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF6C63FF), Color(0xFF9C88FF)],
-                        ),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(Icons.psychology, color: Colors.white, size: 20),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          'assets/images/SexyJulie.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Column(
@@ -127,12 +130,15 @@ class _ChatPageState extends State<ChatPage> {
                         height: 30,
                         width: 30,
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF6C63FF), Color(0xFF9C88FF)],
-                          ),
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: const Icon(Icons.psychology, color: Colors.white, size: 16),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            'assets/images/SexyJulie.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Text(
@@ -211,12 +217,15 @@ class _ChatPageState extends State<ChatPage> {
               height: 30,
               width: 30,
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF6C63FF), Color(0xFF9C88FF)],
-                ),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const Icon(Icons.psychology, color: Colors.white, size: 16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  'assets/images/SexyJulie.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 12),
           ],

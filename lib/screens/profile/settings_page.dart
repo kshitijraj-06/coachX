@@ -1,13 +1,14 @@
-import 'dart:io';
+﻿import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gym_paglu/controllers/theme_controller.dart';
-import 'package:gym_paglu/controllers/user_workout_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../controllers/theme_controller.dart';
+import '../../controllers/user_workout_service.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -37,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Row(
                   children: [
                     IconButton(
-                      onPressed: () => Get.back(),
+                      onPressed: () => Navigator.pop(context),
                       icon: Icon(Icons.arrow_back, color: theme.colorScheme.onBackground),
                     ),
                     const SizedBox(width: 16),
@@ -223,10 +224,10 @@ class _SettingsPageState extends State<SettingsPage> {
         content: Text('This will clear all cached data. Continue?',
             style: GoogleFonts.inter(color: theme.colorScheme.onSurface.withOpacity(0.7))),
         actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
           TextButton(
             onPressed: () async {
-              Get.back();
+              Navigator.pop(context);
               final tempDir = await getTemporaryDirectory();
               if (tempDir.existsSync()) {
                 tempDir.deleteSync(recursive: true);
@@ -250,10 +251,10 @@ class _SettingsPageState extends State<SettingsPage> {
         content: Text('This will export your fitness data as a CSV file. Continue?',
             style: GoogleFonts.inter(color: theme.colorScheme.onSurface.withOpacity(0.7))),
         actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
           TextButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
               _exportData();
             },
             child: const Text('Export'),

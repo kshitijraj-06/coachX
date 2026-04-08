@@ -14,14 +14,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "843246649637-jklufnhn4k81b2aor500ml9t7t3cr2fg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zerobee.gym_paglu",
-            "certificate_hash": "0d0c19bb7fec9caee331169905c9631eb603e1d5"
-          }
-        },
-        {
           "client_id": "843246649637-tl0sf6utl7dqjnc47h3fcv9q5rstfi88.apps.googleusercontent.com",
           "client_type": 3
         }

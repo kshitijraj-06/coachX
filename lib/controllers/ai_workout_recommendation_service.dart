@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+﻿import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +15,13 @@ class AIWorkoutRecommendationService extends GetxController {
   Future<void> generateWorkoutsForUser(String fitnessGoal) async {
     try {
       isGenerating.value = true;
+      
+      // Check if AI workouts already exist for this goal
+      final storedGoal = await storage.read(key: 'ai_workouts_goal');
+      if (storedGoal == fitnessGoal) {
+        print('AI workouts already generated for $fitnessGoal');
+        return;
+      }
       
       // Get available workouts
       final workoutService = Get.put(WorkoutService1());
@@ -64,6 +71,12 @@ Respond with only the workout IDs separated by commas (e.g., 1,3,7,9).''';
             await userWorkoutService.addWorkout(workout);
           }
         }
+        
+        // Store the goal to prevent redundant calls
+        await storage.write(key: 'ai_workouts_goal', value: fitnessGoal);
+        
+        // Refresh the user workouts to update UI
+        await userWorkoutService.fetchUserWorkouts();
         
         print('AI workouts generated: $workoutIds');
         

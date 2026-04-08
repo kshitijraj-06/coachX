@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:gym_paglu/screens/profile/profile_page.dart';
 import '../../controllers/recommendation_service.dart';
 import '../../controllers/dashboard_service.dart';
 import '../ai_trainer/chat_page.dart';
 import '../exercises/exercises_page.dart';
+import '../profile/profile_page.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -98,7 +98,20 @@ class DashboardPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.psychology, color: Colors.white, size: 28),
+                      Container(
+                        height: 28,
+                        width: 28,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: Image.asset(
+                            'assets/images/SexyJulie.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                       const SizedBox(width: 12),
                       Text(
                         'AI Recommendation',
